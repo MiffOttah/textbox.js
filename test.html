@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <script src="textbox.js"></script>
+  <script src="test.js"></script>
+  <style>
+    html, body { background: #222; font-family: sans-serif; }
+    canvas { background: #333; }
+    form {
+      position: absolute;
+      top: 1em;
+      left: calc(512px + 2em);
+      background: #222;
+      color: white;
+      width: 20em;
+    }
+    textarea {
+      width: 18em;
+      background: white;
+      color: black;
+      font-family: sans-serif;
+    }
+    .rtl { direction: rtl; }
+  </style>
+</head>
+<body>
+  <canvas width="512" height="512" id="c"></canvas>
+  <form id="options">
+    <fieldset id="halignFieldset">
+      <legend>Horizontal align</legend>
+      <p><label><input type="radio" name="halign" value="start" checked> Start</label></p>
+      <p><label><input type="radio" name="halign" value="end"> End</label></p>
+      <p><label><input type="radio" name="halign" value="left"> Left</label></p>
+      <p><label><input type="radio" name="halign" value="right"> Right</label></p>
+      <p><label><input type="radio" name="halign" value="center"> Center</label></p>
+    </fieldset>
+    <fieldset id="valignFieldset">
+      <legend>Vertical align</legend>
+      <p><label><input type="radio" name="valign" value="top" checked> Top</label></p>
+      <p><label><input type="radio" name="valign" value="center"> Center</label></p>
+      <p><label><input type="radio" name="valign" value="bottom"> Bottom</label></p>
+    </fieldset>
+    <fieldset>
+      <legend><label for="text">Text</label></legend>
+      <textarea rows="7" id="text">Lorem ipsum dolor sit amet consectetur.
+Adipiscing elit.
+Mauris placerat pharetraconvallisinliberoquis, dignis.
+
+Mauris sit.</textarea>
+      <p><label><input type="radio" name="direction" checked>Left-to-right</label></p>
+      <p><label><input type="radio" name="direction" id="rtl">Right-to-left</label></p>
+    </fieldset>
+  </form>
+</body>
+</html>
