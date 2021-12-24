@@ -1,5 +1,7 @@
 "use strict";
 
+// textbox.js
+// version 1.0.1
 // Copyright © 2021 MiffTheFox
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -61,6 +63,16 @@
     let maxDescent = 0;
     let lineIndex = 0;
 
+    // there's cross-browser compatiblity stuff in 2021 apparently
+    function measure(text){
+      const measurements = ctx.measureText(text);
+      const a = measurements.fontBoundingBoxAscent || measurements.actualBoundingBoxAscent;
+      if (a > maxAscent) maxAscent = a;
+      const d = measurements.fontBoundingBoxDescent || measurements.actualBoundingBoxDescent;
+      if (d > maxDescent) maxDescent = d;
+      return measurements;
+    }
+
     // newlines must be in their own word
     const words = text.replace(NEWLINE_REGEXP, " \n ").replace(SPACE_REGEXP, " ").split(" ");
     //console.log("words = %o", words);
@@ -74,11 +86,7 @@
       } else {
         if (lines[lineIndex]){
           const potentialLine = lines[lineIndex].concat(" ", word);
-          const measurements = ctx.measureText(potentialLine);
-
-          // while we're measuring, check the ascent and descent values
-          if (measurements.fontBoundingBoxAscent > maxAscent) maxAscent = measurements.fontBoundingBoxAscent;
-          if (measurements.fontBoundingBoxDescent > maxDescent) maxDescent = measurements.fontBoundingBoxDescent;
+          const measurements = measure(potentialLine);
 
           if (measurements.width > width){
             // potentialLine too long, so put the word on its own line
@@ -93,9 +101,7 @@
           lines[lineIndex] = word;
 
           // also make sure to grab the ascent and descent for the standalone word
-          const measurements = ctx.measureText(word);
-          if (measurements.fontBoundingBoxAscent > maxAscent) maxAscent = measurements.fontBoundingBoxAscent;
-          if (measurements.fontBoundingBoxDescent > maxDescent) maxDescent = measurements.fontBoundingBoxDescent;
+          measure(word);
         }
       }
     }
